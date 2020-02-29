@@ -1,0 +1,94 @@
+html,
+body {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	font-size: $type-baseline;
+}
+
+@font-face {
+	font-family: ming;
+	src: url("/fonts/liu19.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: authentic_condensed;
+	src: url("/fonts/AUTHENTICSans-Condensed-60.woff2") format("woff2");
+	src: url("/fonts/AUTHENTICSans-Condensed-60.woff") format("woff");
+}
+
+@mixin kern {
+	-moz-font-feature-settings: "kern" 1, "dlig" 1;
+	-ms-font-feature-settings: "kern" 1, "dlig" 1;
+	-o-font-feature-settings: "kern" 1, "dlig" 1;
+	-webkit-font-feature-settings: "kern" 1, "dlig" 1;
+	font-feature-settings: "kern" 1, "dlig" 1;
+	font-kerning: normal;
+}
+
+@mixin wrap {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+}
+
+@mixin hyphen {
+	-ms-hyphens: auto;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
+}
+
+@mixin type {
+	@include kern;
+	@include wrap;
+	// @include hyphen;
+}
+
+$type-size-1: 1em;
+$line-height-1: 1.2em;
+
+$type-1: "ming", ming, monospace;
+$type-2: "authentic_condensed", authentic_condensed, sans-serif;
+$type-3: "authentic_condensed", authentic_condensed, sans-serif;
+
+@mixin type-1 {
+	font-family: $type-1;
+	@include type;
+}
+
+@mixin type-2 {
+	font-family: $type-2;
+	@include type;
+}
+
+@mixin type-3 {
+	font-family: $type-3;
+	@include type;
+}
+
+.t1 {
+	@include type-1;
+}
+
+.t2 {
+	@include type-2;
+}
+
+.t3 {
+	@include type-3;
+}
+
+.super {
+	vertical-align: text-top;
+	font-size: 0.6em;
+	display: inline-block;
+	font-style: normal;
+	@include type-3;
+	text-transform: uppercase;
+}

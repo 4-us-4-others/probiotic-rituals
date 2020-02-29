@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "name": "im-sorry-i-have-2-leave-the-lobby",
+  "scope": "for-us-and-for-others",
+  "builds": [
+    { "src": "index.js", "use": "@now/node-server" },
+    { "src": "js/**/*", "use": "@now/static" },
+    { "src": "stylesheets/**/*", "use": "@now/static" },
+    { "src": "fonts/**/*", "use": "@now/static" },
+    { "src": "assets/**/*", "use": "@now/static" }
+  ],
+  "routes": [{ "src": "/(js|stylesheets|fonts|assets)/(.*)" }, { "src": "/(.*)", "dest": "index.js" }],
+  "github": {
+    "enabled": false,
+    "silent": true
+  }
+}

@@ -1,0 +1,18 @@
+#loading {
+	width: 100vw;
+	height: 100vh;
+	@include boxflex;
+
+	top: 0;
+	left: 0;
+	position: fixed;
+	z-index: 99;
+
+	background-color: $background-color;
+	color: $color-1;
+
+	font-size: 2rem;
+	font-family: $type-3;
+
+	cursor: auto;
+}

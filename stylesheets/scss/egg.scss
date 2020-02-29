@@ -1,0 +1,7 @@
+@import "base/colors/colors";
+@import "4u40";
+
+@media (prefers-color-scheme: dark) {
+	@import "base/colors/dark";
+	@import "4u40";
+}

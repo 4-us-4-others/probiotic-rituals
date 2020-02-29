@@ -1,0 +1,10 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+// Removes default (which, for some reason, is more an 0) margin and padding for ALL elements.
+
+:focus:not(:focus-visible) {
+	outline: none;
+}
+// Get rid of the annoying outline for mouse users but preserves it for keyboard users - ignored by browsers that don’t support :focus-visible. Source:
