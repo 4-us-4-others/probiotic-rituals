@@ -1,0 +1,88 @@
+<!-- 
+	What's happening here?
+
+	Since we passed the contents of the are.na channel we fetched to the render, we can
+	access it using *sections* (https://mustache.github.io/mustache.5.html#Sections)
+
+		((# arena ))
+			(( key ))
+		((/ arena ))
+
+		^ In this example, if `key` exists inside `arena`, it will render every instance
+		of `key` *for each* object/block.
+
+	(note that you will need to use CURLY BRACKETS, not normal ones in the example above,
+	we will not use them here for fear of rendering the arena channel contents JSON here
+	in this comment!!!! lol)
+
+	We then construct a huge ~if/else statement for each block to render different blocks
+	of HTML based on what type of block it is (text, image, link, embed, attachment, etc.)
+
+	From here, we can style each type of block how we want using CSS.
+	
+	Note that mustache doesn't support true if/else statements, so some more complex
+	block types (attachments/files), might need to be handled with javascript (eg. playing
+	videos). Usually the best way to reference these is by rendering the block `id` into
+	the block somewhere, and then rendering the same block `id` as a target in your js
+
+	For more documentation about how you can use mustache to render content into templates:
+	https://mustache.github.io/mustache.5.html
+-->
+
+<div class="pure-white-light-extending-forever-into-the-universe">
+	{{# arena }}
+	<section class="esk-one" id="section_{{ id }}">
+		<div class="ancillary">
+			{{# embed }}
+			<br />
+			{{{ html }}} {{/ embed }} {{^ embed }} {{# source }} {{# url }}<br /><a href="{{ url }}">{{ url }}</a>{{/ url }} {{# image }}
+			<br />
+			<div class="image-container">
+				<img
+					id="img_{{ id }}"
+					class="img-day lazyload blur-up"
+					src="{{# display }}{{{ url }}}{{/ display }}"
+					data-zoom-src="{{# original }}{{{ url }}}{{/ original }}"
+				/>
+			</div>
+			{{/ image }} {{/ source }} {{^ source }} {{# attachment }}
+			<br />
+			<div id="video-container_{{ id }}" class="video-container">
+				<video
+					id="inline_video_{{ id }}"
+					class="video-js video-day"
+					loop
+					controls
+					playsinline
+					autoplay
+					muted
+					preload="auto"
+					poster=""
+					data-setup='{"fluid": true, "controlBar": {"volumePanel": false, "muteToggle": true}}'
+				>
+					<source src="{{{ static_url }}}{{ file_name }}" type="{{{ content_type }}}" />
+				</video>
+			</div>
+			{{/ attachment }} {{# image }}
+			<br />
+			<div class="image-container">
+				<img
+					id="img_{{ id }}"
+					class="img-day lazyload blur-up"
+					src="{{# display }}{{{ url }}}{{/ display }}"
+					data-zoom-src="{{# original }}{{{ url }}}{{/ original }}"
+				/>
+			</div>
+			{{/ image }} {{/ source }} {{/ embed }}
+		</div>
+		<br /><br />
+		{{# description_html }}<br /><span class="description"><br />{{{ description_html }}}</span>{{/ description_html }}{{# content_html }}
+		<span class="double-em">——&nbsp;</span> <span class="monogamy">{{{ content_html }}}</span>{{/ content_html }} {{# metadata }}<span
+			class="description"
+			id="metadata_{{id}}"
+			><br /><mark-down breaks>{{{ description }}}</mark-down></span
+		>{{/ metadata }} <br /><br />
+		<div class="connected">{{ connected_at }}</div>
+	</section>
+	{{/ arena }}
+</div>
