@@ -28,61 +28,50 @@
 	For more documentation about how you can use mustache to render content into templates:
 	https://mustache.github.io/mustache.5.html
 -->
-
-<div class="pure-white-light-extending-forever-into-the-universe">
-	{{# arena }}
-	<section class="esk-one" id="section_{{ id }}">
-		<div class="ancillary">
-			{{# embed }}
-			<br />
-			{{{ html }}} {{/ embed }} {{^ embed }} {{# source }} {{# url }}<br /><a href="{{ url }}">{{ url }}</a>{{/ url }} {{# image }}
-			<br />
-			<div class="image-container">
-				<img
-					id="img_{{ id }}"
-					class="img-day lazyload blur-up"
-					src="{{# display }}{{{ url }}}{{/ display }}"
-					data-zoom-src="{{# original }}{{{ url }}}{{/ original }}"
-				/>
-			</div>
-			{{/ image }} {{/ source }} {{^ source }} {{# attachment }}
-			<br />
-			<div id="video-container_{{ id }}" class="video-container">
-				<video
-					id="inline_video_{{ id }}"
-					class="video-js video-day"
-					loop
-					controls
-					playsinline
-					autoplay
-					muted
-					preload="auto"
-					poster=""
-					data-setup='{"fluid": true, "controlBar": {"volumePanel": false, "muteToggle": true}}'
-				>
-					<source src="{{{ static_url }}}{{ file_name }}" type="{{{ content_type }}}" />
-				</video>
-			</div>
-			{{/ attachment }} {{# image }}
-			<br />
-			<div class="image-container">
-				<img
-					id="img_{{ id }}"
-					class="img-day lazyload blur-up"
-					src="{{# display }}{{{ url }}}{{/ display }}"
-					data-zoom-src="{{# original }}{{{ url }}}{{/ original }}"
-				/>
-			</div>
-			{{/ image }} {{/ source }} {{/ embed }}
+<div id="container">
+	<div class="to-the-left">
+		<a href="https://docs.google.com/spreadsheets/d/18Tndhbzq83tJqJCo7G2k0yBnwUlfGVxsey9D82r_hdo/edit?usp=sharing" target="_blank">CSV dataset</a>
+	</div>
+	<div class="cables"> </div>
+	<div class="to-the-right">
+		<div class="arena-channel">
+			{{# arena }}
+			<section class="arena-block" id="section_{{ id }}">
+				<div class="arena-block-metadata">
+					{{# description_html }}<span class="description"><br />{{{ description_html }}}</span>{{/ description_html }}{{# content_html }}
+					<!-- <span class="double-em">——&nbsp;</span> -->
+					<h2>{{ title }}</h2><span class="monogamy">{{{ content_html }}}</span>{{/ content_html }} {{# metadata }}<span
+						class="description"
+						id="metadata_{{id}}"
+						><br /><mark-down breaks>{{{ description }}}</mark-down></span
+					>{{/ metadata }}
+				</div>
+				{{# embed }}
+				<div id="embed-block_{{ id }}" class="embed-block">
+					<br />
+					{{{ html }}}
+				</div>
+				{{/ embed }} {{^ embed }} {{# source }} {{# url }}<br /><a href="{{ url }}">{{ url }}</a>{{/ url }} {{# image }}
+				<br />
+				<div class="url-block">
+					<img id="url-block-image_{{ id }}" class="url-block-image" src="{{# display }}{{{ url }}}{{/ display }}" />
+				</div>
+				{{/ image }} {{/ source }} {{^ source }} {{# attachment }}
+				<br />
+				<div id="video-block_{{ id }}" class="video-block">
+					<video id="video-block-attachment_{{ id }}" class="video-block-attachment" loop controls playsinline autoplay muted preload="auto">
+						<source src="{{{ static_url }}}{{ file_name }}" type="{{{ content_type }}}" />
+						<!-- fix this -->
+					</video>
+				</div>
+				{{/ attachment }} {{# image }}
+				<br />
+				<div class="image-block">
+					<img id="image-block-image_{{ id }}" class="image-block-image" src="{{# display }}{{{ url }}}{{/ display }}" />
+				</div>
+				{{/ image }} {{/ source }} {{/ embed }}
+			</section>
+			{{/ arena }}
 		</div>
-		<br /><br />
-		{{# description_html }}<br /><span class="description"><br />{{{ description_html }}}</span>{{/ description_html }}{{# content_html }}
-		<span class="double-em">——&nbsp;</span> <span class="monogamy">{{{ content_html }}}</span>{{/ content_html }} {{# metadata }}<span
-			class="description"
-			id="metadata_{{id}}"
-			><br /><mark-down breaks>{{{ description }}}</mark-down></span
-		>{{/ metadata }} <br /><br />
-		<div class="connected">{{ connected_at }}</div>
-	</section>
-	{{/ arena }}
+	</div>
 </div>
