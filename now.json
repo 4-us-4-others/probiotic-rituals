@@ -7,9 +7,10 @@
     { "src": "js/**/*", "use": "@now/static" },
     { "src": "stylesheets/**/*", "use": "@now/static" },
     { "src": "fonts/**/*", "use": "@now/static" },
-    { "src": "assets/**/*", "use": "@now/static" }
+    { "src": "assets/**/*", "use": "@now/static" },
+    { "src": "api/**/*", "use": "@now/static" }
   ],
-  "routes": [{ "src": "/(js|stylesheets|fonts|assets)/(.*)" }, { "src": "/(.*)", "dest": "index.js" }],
+  "routes": [{ "src": "/(js|stylesheets|fonts|assets|api)/(.*)" }, { "src": "/(.*)", "dest": "index.js" }],
   "github": {
     "enabled": false,
     "silent": true
