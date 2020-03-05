@@ -11,7 +11,7 @@ const cdn = process.env.cdn
 
 // here we declare our site config as cache - this is loaded if there any errors are thrown when trying to get our channel from are.na
 let cache
-if (environment !== 'now') {
+if (environment === 'now') {
   cache = yaml.safeLoad(fs.readFileSync(`${__dirname}/api/config.yaml`, 'utf8'))
   // now requires `__dirname + ` vs the simpler `./*` for paths here. ref: https://github.com/zeit/ncc/issues/216 (says fixed but is not)
 } else {
