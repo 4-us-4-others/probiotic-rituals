@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "im-sorry-i-have-2-leave-the-lobby",
+  "name": "probiotic-rituals",
   "scope": "4-us-and-4-others",
   "builds": [
     { "src": "index.js", "use": "@now/node-server" },
@@ -13,5 +13,11 @@
   "github": {
     "enabled": false,
     "silent": true
+  },
+  "env": {
+    "arenaPAT": "@probiotic_arena-pat",
+    "arenaChannel": "@probiotic_arena-channel",
+    "cdn": "probiotic-rituals",
+    "environment": "now"
   }
 }
