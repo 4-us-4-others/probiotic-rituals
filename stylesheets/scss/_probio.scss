@@ -1,0 +1,28 @@
+h2 {
+	font-size: 3em;
+	font-weight: 1;
+	line-height: 0.8em;
+}
+#container {
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.to-the-left {
+	position: fixed;
+	width: 25%;
+	font-size: 0.7em;
+	left: 10px;
+	bottom: 10px;
+}
+.to-the-right {
+	position: absolute;
+	width: 25%;
+	font-size: 0.7em;
+	right: 10px;
+}
+.arena-block,
+h2 {
+	margin-top: 2vh;
+	margin-bottom: 1vh;
+}

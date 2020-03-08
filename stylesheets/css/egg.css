@@ -18,9 +18,18 @@ body {
 	src: url("/fonts/liu19.ttf") format("truetype");
 }
 @font-face {
+	font-family: lab_mono;
+	src: url("/fonts/labmono-regular-web.woff2") format("woff2");
+	src: url("/fonts/labmono-regular-web.woff") format("woff");
+}
+@font-face {
 	font-family: authentic_condensed;
 	src: url("/fonts/AUTHENTICSans-Condensed-60.woff2") format("woff2");
 	src: url("/fonts/AUTHENTICSans-Condensed-60.woff") format("woff");
+}
+@font-face {
+	font-family: authentic_classified;
+	src: url("/fonts/AUTHENTIC Classified.otf") format("truetype");
 }
 .t1 {
 	font-family: "ming", ming, monospace;
@@ -52,6 +61,34 @@ body {
 }
 .t3 {
 	font-family: "authentic_condensed", authentic_condensed, sans-serif;
+	-moz-font-feature-settings: "kern" 1, "dlig" 1;
+	-ms-font-feature-settings: "kern" 1, "dlig" 1;
+	-o-font-feature-settings: "kern" 1, "dlig" 1;
+	-webkit-font-feature-settings: "kern" 1, "dlig" 1;
+	font-feature-settings: "kern" 1, "dlig" 1;
+	font-kerning: normal;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+}
+.t4 {
+	font-family: "lab_mono", lab_mono, sans-serif;
+	-moz-font-feature-settings: "kern" 1, "dlig" 1;
+	-ms-font-feature-settings: "kern" 1, "dlig" 1;
+	-o-font-feature-settings: "kern" 1, "dlig" 1;
+	-webkit-font-feature-settings: "kern" 1, "dlig" 1;
+	font-feature-settings: "kern" 1, "dlig" 1;
+	font-kerning: normal;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+}
+.tamagotchi {
+	font-family: "authentic_classified", authentic_classified, sans-serif;
 	-moz-font-feature-settings: "kern" 1, "dlig" 1;
 	-ms-font-feature-settings: "kern" 1, "dlig" 1;
 	-o-font-feature-settings: "kern" 1, "dlig" 1;
@@ -173,7 +210,7 @@ a {
 	color: #000;
 }
 body {
-	/*background-color: #e6e6e6;*/
+	background-color: #e6e6e6;
 	margin: 0;
 	font-family: "ming", ming, monospace;
 	color: #000;
@@ -287,6 +324,36 @@ body {
 	word-break: break-word;
 	filter: drop-shadow(0 0 1rem rgba(153, 153, 153, 0.35));
 }
+/*probio start*/
+h2 {
+	font-size: 3em;
+	font-weight: 1;
+	line-height: 0.8em;
+}
+#container {
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+.to-the-left {
+	position: fixed;
+	width: 25%;
+	font-size: 0.7em;
+	left: 10px;
+	bottom: 10px;
+}
+.to-the-right {
+	position: absolute;
+	width: 25%;
+	font-size: 0.7em;
+	right: 10px;
+}
+.arena-block,
+h2 {
+	margin-top: 2vh;
+	margin-bottom: 1vh;
+}
+/*probio end*/
 @media (max-width: 1000px) {
 	.nav-home img {
 		width: 6rem;
@@ -363,17 +430,14 @@ body {
 		src: url("/fonts/liu19.ttf") format("truetype");
 	}
 	@font-face {
+		font-family: lab_mono;
+		src: url("/fonts/labmono-regular-web.woff2") format("woff2");
+		src: url("/fonts/labmono-regular-web.woff") format("woff");
+	}
+	@font-face {
 		font-family: authentic_condensed;
 		src: url("/fonts/AUTHENTICSans-Condensed-60.woff2") format("woff2");
 		src: url("/fonts/AUTHENTICSans-Condensed-60.woff") format("woff");
-	}
-	@font-face {
-		font-family: lab-mono;
-		src: url("/fonts/LabMono-Regular.otf") format("truetype");
-	}
-	@font-face {
-		font-family: classified;
-		src: url("/fonts/AUTHENTIC Classified.otf") format("truetype");
 	}
 	.t1 {
 		font-family: "ming", ming, monospace;
@@ -405,6 +469,20 @@ body {
 	}
 	.t3 {
 		font-family: "authentic_condensed", authentic_condensed, sans-serif;
+		-moz-font-feature-settings: "kern" 1, "dlig" 1;
+		-ms-font-feature-settings: "kern" 1, "dlig" 1;
+		-o-font-feature-settings: "kern" 1, "dlig" 1;
+		-webkit-font-feature-settings: "kern" 1, "dlig" 1;
+		font-feature-settings: "kern" 1, "dlig" 1;
+		font-kerning: normal;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		-ms-word-break: break-all;
+		word-break: break-all;
+		word-break: break-word;
+	}
+	.t4 {
+		font-family: "lab_mono", lab_mono, sans-serif;
 		-moz-font-feature-settings: "kern" 1, "dlig" 1;
 		-ms-font-feature-settings: "kern" 1, "dlig" 1;
 		-o-font-feature-settings: "kern" 1, "dlig" 1;
@@ -526,9 +604,9 @@ body {
 		/*color: #c5c5c5;*/
 	}
 	body {
-		/*background-color: #000;*/
+		background-color: #000;
 		margin: 0;
-		font-family: "lab-mono", lab-mono, monospace;
+		font-family: "ming", ming, monospace;
 		/*color: #c5c5c5;*/
 	}
 	#loading {
@@ -641,47 +719,6 @@ body {
 		filter: drop-shadow(0 0 1rem rgba(153, 153, 153, 0.35));
 	}
 }
-
-h2 {
-	font-family: "classified", classified, sans-serif;
-	font-size: 3em;
-	line-height: 0.9em;
-	font-weight: 1;
-	margin-bottom: 1vh;
-}
-
-#container {
-	border: solid 1px #000;
-	display: -webkit-flex;
-	display: -ms-flexbox;
-	display: flex;
-}
-
-.to-the-left {
-	width: 25%;
-	position: fixed;
-	left: 10px;
-	font-size: 0.7em;
-	bottom: 10px;
-}
-
-.cables {
-}
-
-.arena-block {
-	margin-bottom: 5vh;
-}
-
-.to-the-right {
-	width: 25%;
-	position: absolute;
-	right: 10px;
-	font-size: 0.7em;
-}
-
-h2 {
-}
-
 @media (prefers-color-scheme: dark) and (max-width: 1000px) {
 	.nav-home img {
 		width: 6rem;
