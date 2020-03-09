@@ -5,7 +5,11 @@
 	padding: 1rem;
 }
 
+.to-the-right,
+.to-the-left {
+	display: none;
+}
+
 .to-the-right {
 	width: 50%;
-	display: none;
 }
