@@ -1,6 +1,9 @@
 div#show-hide {
+	position: absolute;
+	display: inline-block;
 	margin: 10px;
 	cursor: ne-resize;
+	background-color: transparent;
 }
 
 #container {
