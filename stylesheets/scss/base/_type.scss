@@ -25,6 +25,11 @@ body {
 	src: url("/fonts/AUTHENTICSans-Condensed-60.woff") format("woff");
 }
 
+@font-face {
+	font-family: classified;
+	src: url("/fonts/AUTHENTIC-Classified.otf") format("otf");
+}
+
 @mixin kern {
 	-moz-font-feature-settings: "kern" 1, "dlig" 1;
 	-ms-font-feature-settings: "kern" 1, "dlig" 1;
@@ -61,7 +66,7 @@ $line-height-1: 1.2em;
 
 $type-1: "ming", ming, monospace;
 $type-2: "authentic_condensed", authentic_condensed, sans-serif;
-$type-3: "authentic_condensed", authentic_condensed, sans-serif;
+$type-3: "classified", classified, sans-serif;
 $type-4: "lab_mono", lab_mono, sans-serif;
 
 @mixin type-1 {

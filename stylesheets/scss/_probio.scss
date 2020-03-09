@@ -1,13 +1,12 @@
-h2 {
-	font-size: 3em;
-	font-weight: 1;
-	line-height: 0.8em;
+div#show-hide {
+	margin: 10px;
+	cursor: ne-resize;
 }
+
 #container {
-	display: -webkit-flex;
-	display: -ms-flexbox;
 	display: flex;
 }
+
 .to-the-left {
 	position: fixed;
 	width: 25%;
@@ -15,12 +14,27 @@ h2 {
 	left: 10px;
 	bottom: 10px;
 }
+
 .to-the-right {
 	position: absolute;
 	width: 25%;
 	font-size: 0.7em;
 	right: 10px;
 }
+
+.cables {
+	position: fixed;
+}
+
+h2 {
+	font-family: $type-3;
+	@include type;
+	font-size: 3em;
+	font-weight: 1;
+	line-height: 0.8em;
+	color: black;
+}
+
 .arena-block,
 h2 {
 	margin-top: 2vh;

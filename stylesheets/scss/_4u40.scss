@@ -6,7 +6,7 @@ $type-baseline: 17px; // set baseline aka = 1rem
 @import "base/utilities";
 
 ::selection {
-	background-color: $color-2;
+	background-color: $background-color;
 }
 // ::-webkit-scrollbar { display: none; }
 
@@ -21,7 +21,6 @@ a {
 body {
 	background-color: $background-color;
 	margin: 0;
-	font-family: $type-1;
 	color: $color-1;
 }
 
