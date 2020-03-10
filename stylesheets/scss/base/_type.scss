@@ -9,20 +9,9 @@ body {
 }
 
 @font-face {
-	font-family: ming;
-	src: url("/fonts/liu19.ttf") format("truetype");
-}
-
-@font-face {
-	font-family: lab_mono;
-	src: url("/fonts/labmono-regular-web.woff2") format("woff2");
-	src: url("/fonts/labmono-regular-web.woff") format("woff");
-}
-
-@font-face {
-	font-family: authentic_condensed;
-	src: url("/fonts/AUTHENTICSans-Condensed-60.woff2") format("woff2");
-	src: url("/fonts/AUTHENTICSans-Condensed-60.woff") format("woff");
+	font-family: lunchtype;
+	src: url("/fonts/lunchtype22-regular-webfont.woff") format("woff");
+	src: url("/fonts/lunchtype22-regular-webfont.woff2") format("woff2");
 }
 
 @font-face {
@@ -64,10 +53,8 @@ body {
 $type-size-1: 1em;
 $line-height-1: 1.2em;
 
-$type-1: "ming", ming, monospace;
-$type-2: "authentic_condensed", authentic_condensed, sans-serif;
-$type-3: "classified", classified, sans-serif;
-$type-4: "lab_mono", lab_mono, sans-serif;
+$type-1: "lunchtype", lunchtype, sans-serif;
+$type-2: "classified", classified, sans-serif;
 
 @mixin type-1 {
 	font-family: $type-1;
@@ -79,37 +66,10 @@ $type-4: "lab_mono", lab_mono, sans-serif;
 	@include type;
 }
 
-@mixin type-3 {
-	font-family: $type-3;
-	@include type;
-}
-
-@mixin type-4 {
-	font-family: $type-4;
-	@include type;
-}
-
 .t1 {
 	@include type-1;
 }
 
 .t2 {
 	@include type-2;
-}
-
-.t3 {
-	@include type-3;
-}
-
-.t4 {
-	@include type-4;
-}
-
-.super {
-	vertical-align: text-top;
-	font-size: 0.6em;
-	display: inline-block;
-	font-style: normal;
-	@include type-3;
-	text-transform: uppercase;
 }

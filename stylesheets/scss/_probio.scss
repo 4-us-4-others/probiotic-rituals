@@ -1,5 +1,5 @@
 div#show-hide {
-	position: absolute;
+	position: fixed;
 	display: inline-block;
 	margin: 10px;
 	cursor: pointer;
@@ -10,10 +10,13 @@ div#show-hide {
 	display: flex;
 }
 
+.to-the-left,
+.to-the-right {
+	font-size: 1em;
+}
+
 .to-the-left {
 	position: fixed;
-	width: 25%;
-	font-size: 0.7em;
 	left: 10px;
 	bottom: 10px;
 }
@@ -21,21 +24,20 @@ div#show-hide {
 .to-the-right {
 	position: absolute;
 	width: 25%;
-	font-size: 0.7em;
 	right: 10px;
 }
 
-.cables {
+#glcanvas {
 	position: fixed;
+	z-index: -1;
 }
 
 h2 {
-	font-family: $type-3;
+	font-family: $type-2;
 	@include type;
-	font-size: 3em;
+	font-size: 2.5em;
 	font-weight: 1;
 	line-height: 0.8em;
-	color: black;
 }
 
 .arena-block,
