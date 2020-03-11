@@ -1,6 +1,12 @@
-<title>{{#title}}&mdash; {{title}} {{/title}}</title>
+<title>
+	{{#config.details.title}}&mdash; {{config.details.title}}{{/config.details.title}}{{^config.details.title}}&mdash; Probiotic
+	Rituals{{/config.details.title}}
+</title>
 <meta charset="utf-8" />
-<meta name="description" content="Probiotic Rituals" />
+<meta
+	name="description"
+	content="{{#config.details.description}}&mdash; {{config.details.description}}{{/config.details.description}}{{^config.details.description}}&mdash; Probiotic Rituals{{/config.details.description}}"
+/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/fav/favicon-32x32.png" />
