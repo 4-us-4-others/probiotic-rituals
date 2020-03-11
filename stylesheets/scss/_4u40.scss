@@ -31,6 +31,8 @@ body {
 @import "loading";
 @import "nav";
 
+@import "probio";
+
 // responsive medium
 @media (max-width: 1000px) {
 	@import "responsive/mid";
