@@ -64,7 +64,7 @@ $type-2: "classified", classified, sans-serif;
 
 @mixin type-2 {
 	font-family: $type-2;
-	line-height: 0.75em;
+	line-height: 0.65em;
 	@include type;
 }
 
