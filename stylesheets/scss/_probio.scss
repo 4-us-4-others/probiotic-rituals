@@ -54,10 +54,23 @@ h2 {
 	margin-top: 2vh;
 }
 
-.csv-link {
-	font-size: 1.25em;
+.super,
+.monogamy p strong {
+	@include type-2;
+	font-size: 1em;
+	vertical-align: top;
+	letter-spacing: -0.05em;
+	text-transform: uppercase;
+	font-weight: normal;
 }
 
 .monogamy p em {
 	@include type-1i;
+}
+
+br {
+	// paragraph spacing bc markdown does this poorly
+	display: block;
+	margin: 0.5em 0;
+	content: " ";
 }
