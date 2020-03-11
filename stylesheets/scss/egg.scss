@@ -3,5 +3,7 @@
 @import "probio";
 
 @media (prefers-color-scheme: dark) {
+	@import "base/colors/colors";
 	@import "4u40";
+	@import "probio";
 }
