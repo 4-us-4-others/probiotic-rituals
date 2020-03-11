@@ -31,35 +31,7 @@ body {
 @import "loading";
 @import "nav";
 
-.oh-christ-i-just-wanted-you-to-like-my-instagram-posts-and-then-i-became-greedy-i-wanted-you-to-lov {
-	width: calc(100vw - 8rem);
-	height: calc(100vh - 8rem);
-	@include boxflex;
-	@include type-1;
-	font-size: 4rem;
-	padding: 4rem;
-}
-
-.gh-link {
-	// vertical-align: 56%;
-	vertical-align: 40%;
-
-	border-radius: 0.5em; // ems here so we don't have to do responsive shit for this button for each size
-	padding: 0.5em 1.75em 0.325em 0.75em;
-
-	background-image: url("../../assets/hummingbird.png");
-	background-color: $background-color;
-	background-position-x: 3.45em;
-	background-position-y: -0.2em;
-	background-repeat: no-repeat;
-	background-size: contain;
-
-	font-size: 0.3em;
-	color: $color-1;
-	text-transform: uppercase;
-	@include type-2;
-	filter: drop-shadow(0 0 1rem rgba(153, 153, 153, 0.35));
-}
+@import "probio";
 
 // responsive medium
 @media (max-width: 1000px) {

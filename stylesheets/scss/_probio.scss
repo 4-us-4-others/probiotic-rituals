@@ -37,11 +37,63 @@ h2 {
 	@include type;
 	font-size: 2.5em;
 	font-weight: 1;
-	line-height: 0.8em;
+	// line-height: 0.8em;
 }
 
 .arena-block,
 h2 {
+	margin-bottom: 0.5em;
+}
+
+.arena-block {
+	margin-top: 2.5em;
+	margin-bottom: 1em;
+}
+
+.arena-block:first-of-type {
 	margin-top: 2vh;
-	margin-bottom: 1vh;
+}
+
+.monogamy p,
+.monogamy ul,
+.monogamy ol {
+	margin-bottom: 0.5em;
+}
+
+.monogamy ul,
+.monogamy ol {
+	padding-left: 2em;
+}
+
+.monogamy ul {
+	list-style-type: square;
+}
+
+.super,
+.monogamy p strong {
+	@include type-2;
+	font-size: 1em;
+	vertical-align: top;
+	letter-spacing: -0.05em;
+	text-transform: uppercase;
+	font-weight: normal;
+}
+
+.monogamy p em {
+	@include type-1i;
+}
+
+.monogamy p a {
+	text-decoration: underline;
+}
+
+br {
+	// paragraph spacing bc markdown does this poorly
+	display: block;
+	margin: 0.5em 0;
+	content: " ";
+}
+
+#hc {
+	cursor: pointer;
 }
