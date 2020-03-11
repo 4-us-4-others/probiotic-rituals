@@ -54,6 +54,17 @@ h2 {
 	margin-top: 2vh;
 }
 
+.monogamy p,
+.monogamy ul,
+.monogamy ol {
+	margin-bottom: 0.5em;
+}
+
+.monogamy ul,
+.monogamy ol {
+	padding-left: 2em;
+}
+
 .super,
 .monogamy p strong {
 	@include type-2;
