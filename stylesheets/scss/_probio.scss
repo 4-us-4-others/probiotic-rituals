@@ -65,6 +65,10 @@ h2 {
 	padding-left: 2em;
 }
 
+.monogamy ul {
+	list-style-type: square;
+}
+
 .super,
 .monogamy p strong {
 	@include type-2;
