@@ -1,5 +1,8 @@
 ## Text Styling
 
+Private sharable version here: [Probiotic Rituals Text Styles
+↗](https://gist.github.com/mwvd/92a6e32de5573584b0dac40d7cd1eea5)
+
 Text in each Are.na block can be styled using a few different formats with Markdown. Supported styles ⤵
 
 Base text! _italic text_
