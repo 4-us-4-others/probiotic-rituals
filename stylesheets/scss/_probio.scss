@@ -79,6 +79,10 @@ h2 {
 	@include type-1i;
 }
 
+.monogamy p a {
+	color: $color-2;
+}
+
 br {
 	// paragraph spacing bc markdown does this poorly
 	display: block;
