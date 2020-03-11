@@ -1,33 +1,3 @@
-<!-- 
-	What's happening here?
-
-	Since we passed the contents of the are.na channel we fetched to the render, we can
-	access it using *sections* (https://mustache.github.io/mustache.5.html#Sections)
-
-		((# arena ))
-			(( key ))
-		((/ arena ))
-
-		^ In this example, if `key` exists inside `arena`, it will render every instance
-		of `key` *for each* object/block.
-
-	(note that you will need to use CURLY BRACKETS, not normal ones in the example above,
-	we will not use them here for fear of rendering the arena channel contents JSON here
-	in this comment!!!! lol)
-
-	We then construct a huge ~if/else statement for each block to render different blocks
-	of HTML based on what type of block it is (text, image, link, embed, attachment, etc.)
-
-	From here, we can style each type of block how we want using CSS.
-	
-	Note that mustache doesn't support true if/else statements, so some more complex
-	block types (attachments/files), might need to be handled with javascript (eg. playing
-	videos). Usually the best way to reference these is by rendering the block `id` into
-	the block somewhere, and then rendering the same block `id` as a target in your js
-
-	For more documentation about how you can use mustache to render content into templates:
-	https://mustache.github.io/mustache.5.html
--->
 <div id="container" class="t1">
 	<div class="to-the-left">
 		<a href="https://docs.google.com/spreadsheets/d/18Tndhbzq83tJqJCo7G2k0yBnwUlfGVxsey9D82r_hdo/edit?usp=sharing" target="_blank">CSV dataset</a>
@@ -39,7 +9,6 @@
 			<section class="arena-block" id="section_{{ id }}">
 				<div class="arena-block-metadata">
 					{{# description_html }}<span class="description"><br />{{{ description_html }}}</span>{{/ description_html }}{{# content_html }}
-					<!-- <span class="double-em">——&nbsp;</span> -->
 					<h2 class="t2">{{ title }}</h2><span class="monogamy">{{{ content_html }}}</span>{{/ content_html }} {{# metadata }}<span
 						class="description"
 						id="metadata_{{id}}"
@@ -61,7 +30,6 @@
 				<div id="video-block_{{ id }}" class="video-block">
 					<video id="video-block-attachment_{{ id }}" class="video-block-attachment" loop controls playsinline autoplay muted preload="auto">
 						<source src="{{{ static_url }}}{{ file_name }}" type="{{{ content_type }}}" />
-						<!-- fix this -->
 					</video>
 				</div>
 				{{/ attachment }} {{# image }}
