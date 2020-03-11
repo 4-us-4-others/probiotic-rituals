@@ -53,3 +53,11 @@ h2 {
 .arena-block:first-of-type {
 	margin-top: 2vh;
 }
+
+.csv-link {
+	font-size: 1.25em;
+}
+
+.monogamy p em {
+	@include type-1i;
+}
