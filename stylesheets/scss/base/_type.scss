@@ -9,7 +9,7 @@ body {
 }
 
 @font-face {
-	font-family: lunchtype;
+	font-family: lunchtype-22r;
 	src: url("/fonts/lunchtype22-regular-webfont.woff") format("woff");
 	src: url("/fonts/lunchtype22-regular-webfont.woff2") format("woff2");
 }
@@ -54,7 +54,7 @@ body {
 $type-size-1: 1em;
 $line-height-1: 1.2em;
 
-$type-1: "lunchtype", lunchtype, sans-serif;
+$type-1: "lunchtype-22r", lunchtype-22r, sans-serif;
 $type-2: "classified", classified, sans-serif;
 
 @mixin type-1 {
