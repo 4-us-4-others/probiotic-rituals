@@ -6,6 +6,18 @@ div#show-hide {
 	background-color: transparent;
 }
 
+#show-hide img {
+	height: 2em;
+	width: auto;
+}
+
+#sh-base {
+	display: block;
+}
+#sh-hc {
+	display: none;
+}
+
 #container {
 	display: flex;
 }
