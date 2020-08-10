@@ -4,6 +4,7 @@
   "description": "probiotic rituals",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "start": "node index.js"
   },
   "engines": {
@@ -57,10 +58,7 @@
     "bracketSpacing": true,
     "overrides": [
       {
-        "files": [
-          "index.js",
-          "*.js"
-        ],
+        "files": ["index.js", "*.js"],
         "options": {
           "tabWidth": 2,
           "useTabs": false,
@@ -69,9 +67,7 @@
         }
       },
       {
-        "files": [
-          "*.html"
-        ],
+        "files": ["*.html"],
         "options": {
           "parser": "html",
           "htmlWhitespaceSensitivity": "strict"
@@ -87,13 +83,7 @@
       }
     ]
   },
-  "prettierIgnore": [
-    "js/vendor*",
-    "*.min.js",
-    "*.css",
-    "assets*",
-    "fonts*"
-  ],
+  "prettierIgnore": ["js/vendor*", "*.min.js", "*.css", "assets*", "fonts*"],
   "eslintConfig": {
     "parserOptions": {
       "ecmaVersion": 2017
@@ -103,14 +93,8 @@
       "browser": true,
       "jquery": true
     },
-    "extends": [
-      "eslint:recommended",
-      "airbnb-base",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
+    "extends": ["eslint:recommended", "airbnb-base", "prettier"],
+    "plugins": ["prettier"],
     "rules": {
       "func-names": "off",
       "no-console": "warn",
@@ -122,19 +106,9 @@
           "objectsInArrays": false
         }
       ],
-      "object-curly-spacing": [
-        "warn",
-        "always"
-      ],
-      "prettier/prettier": [
-        "warn"
-      ]
+      "object-curly-spacing": ["warn", "always"],
+      "prettier/prettier": ["warn"]
     }
   },
-  "eslintIgnore": [
-    "js/vendor*",
-    "assets*",
-    "fonts*",
-    "Gruntfile.js"
-  ]
+  "eslintIgnore": ["js/vendor*", "assets*", "fonts*", "Gruntfile.js"]
 }
