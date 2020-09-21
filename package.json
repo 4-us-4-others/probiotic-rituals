@@ -42,7 +42,7 @@
     "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-nodemon": "^0.4.2",
-    "prettier": "2.1.1"
+    "prettier": "2.1.2"
   },
   "nodemonConfig": {
     "env": {
