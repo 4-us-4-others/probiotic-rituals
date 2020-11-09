@@ -150,10 +150,10 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.6"
 
-are.na@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/are.na/-/are.na-0.1.4.tgz#dc57ff3589e6debeaeb56c26febf266e43f34091"
-  integrity sha512-tSxsmC1kuAJk25GrIJvQQ/Y+6kVx8tmMvNqTe/dNZeaIA+uBU7lvILoLCFXmT+siw1ETCfUbvzLbnh9hVKqLgw==
+are.na@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/are.na/-/are.na-0.1.5.tgz#83f808e3c1688af61b15087884afe6e365bf5b6b"
+  integrity sha512-ZM5zBXfO/Ug+nB40emqbQsJmI3F2V3nX8NAIaSxRUfsUYNvVe/t0Elb3c2SEk41260NLjZ8sSOi13IxFW1K9EQ==
   dependencies:
     axios "^0.18.1"
     qs "^6.5.1"
