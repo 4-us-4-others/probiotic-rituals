@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/4-us-4-others/probiotic-rituals#readme",
   "dependencies": {
-    "are.na": "^0.1.4",
+    "are.na": "^0.1.5",
     "compression": "^1.7.4",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.1",
