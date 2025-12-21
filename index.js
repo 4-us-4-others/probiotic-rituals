@@ -1,99 +1,253 @@
-const express = require('express')
-const compression = require('compression')
-const mustacheExpress = require('mustache-express')
-const Arena = require('are.na')
-const yaml = require('js-yaml')
-const fs = require('fs')
-require('dotenv-flow').config()
+import { Hono } from 'hono'
+import { cors } from 'hono/cors'
+import Mustache from 'mustache'
+import yaml from 'js-yaml'
 
-const environment = process.env.environment
-const cdn = process.env.cdn
+const app = new Hono()
 
-// here we declare our site config as cache - this is loaded if there any errors are thrown when trying to get our channel from are.na
-let cache
-if (environment === 'now') {
-  cache = yaml.safeLoad(fs.readFileSync(`${__dirname}/api/config.yaml`, 'utf8'))
-  // now requires `__dirname + ` vs the simpler `./*` for paths here. ref: https://github.com/zeit/ncc/issues/216 (says fixed but is not)
-} else {
-  cache = yaml.safeLoad(fs.readFileSync('./api/config.yaml', 'utf8'))
-}
+// Middleware
+app.use('*', cors())
 
-const app = express()
-
-app.use(compression())
-
-if (environment !== 'now') {
-  app.use('/js', express.static('js'))
-  app.use('/stylesheets', express.static('stylesheets'))
-  app.use('/fonts', express.static('fonts'))
-  app.use('/assets', express.static('assets'))
-  app.use('/api', express.static('api'))
-}
-
-app.engine('html', mustacheExpress())
-app.set('view engine', 'html')
-app.set('views', `${__dirname}/views`)
-
-app.get('/', async function(req, res) {
-  const arena = new Arena({ accessToken: process.env.arenaPAT })
-  arena
-    .channel(process.env.arenaChannel)
-    .get({
-      page: 1, // get the first page of results
-      per: 64, // get 64 items per call (max: 100) - play around w this for performance
-      direction: 'desc' // ask API v nicely to sort blocks by most recent
-    })
-    .then(channel => {
-      // fetch our whole are.na channel as `channel`
-
-      const config = yaml.safeLoad(channel.metadata.description) // get our site description from our are.na channel description - since it is loaded in as yaml, we can access it's values with `config.key`, ex: for title, we can use `config.details.title`
-      const contents = channel.contents // clean up the results a little bit, and make the channel's contents available as a constant, `contents`
-
-      // res.send(channel) // uncomment this to see the js object that gets passed to the render
-      res.render('index.html', {
-        static_url: cdn,
-        config,
-        arena: contents // pass our are.na channel contents into the render for use w mustache.js by using `{{arena}}` - see views/arena.html
-      })
-    })
-    .catch(err => {
-      // handle errors
-
-      cache.details.title = 'Error 😭' // change the value of cache.details.title (loaded from ./api/config.yaml) to reflect an error
-
-      console.log(err)
-      res.render('index.html', {
-        title: 'Error 😭',
-        static_url: cdn,
-        config: cache
-      })
-    })
+// Get environment from context
+const getEnv = (c) => ({
+  environment: c.env.environment || 'production',
+  cdn: c.env.cdn,
+  BROWSER_REFRESH_URL: c.env.BROWSER_REFRESH_URL,
+  arenaPAT: c.env.arenaPAT,
+  arenaChannel: c.env.arenaChannel,
 })
 
-app.use(function(req, res) {
-  res.status(404)
+// Template cache
+const templates = {}
 
-  if (req.accepts('html')) {
-    res.render('404', {
-      url: req.url,
-      static_url: '...',
-      title: 'Page not found'
-    })
-  } else {
-    res.send('404')
+// Config cache - will be loaded from ASSETS
+let configCache = null
+
+// Load config.yaml from ASSETS
+async function loadConfig(assetsBinding) {
+  if (configCache) {
+    return configCache
+  }
+
+  try {
+    const url = 'http://localhost/api/config.yaml'
+    const response = await assetsBinding.fetch(url)
+
+    if (!response.ok) {
+      throw new Error(`Config file not found (${response.status})`)
+    }
+
+    const yamlText = await response.text()
+    configCache = yaml.load(yamlText)
+    console.log('Loaded config from api/config.yaml')
+    return configCache
+  } catch (error) {
+    console.error('Error loading config:', error)
+    // Return a basic fallback config
+    return {
+      details: {
+        title: 'Error loading config',
+      },
+    }
+  }
+}
+
+// Load template from ASSETS
+async function loadTemplate(templateName, assetsBinding) {
+  const cacheKey = templateName
+  if (templates[cacheKey]) {
+    return templates[cacheKey]
+  }
+
+  try {
+    const fileName = templateName.endsWith('.html') ? templateName : `${templateName}.html`
+    const url = `http://localhost/views/${fileName}`
+    const response = await assetsBinding.fetch(url)
+
+    if (!response.ok) {
+      throw new Error(`Template ${templateName} not found (${response.status})`)
+    }
+
+    const template = await response.text()
+    templates[cacheKey] = template
+    return template
+  } catch (error) {
+    console.error(`Error loading template ${templateName}:`, error)
+    throw error
+  }
+}
+
+// Load partials
+async function loadPartials(template, assetsBinding, loadedPartials = {}) {
+  const partialRegex = /\{\{>\s*([^\}]+)\s*\}\}/g
+  let match
+
+  while ((match = partialRegex.exec(template)) !== null) {
+    const partialPath = match[1].trim()
+
+    if (loadedPartials[partialPath]) {
+      continue
+    }
+
+    try {
+      const partialContent = await loadTemplate(partialPath, assetsBinding)
+      loadedPartials[partialPath] = partialContent
+      await loadPartials(partialContent, assetsBinding, loadedPartials)
+    } catch (error) {
+      console.error(`Error loading partial ${partialPath}:`, error)
+      loadedPartials[partialPath] = `<!-- Partial ${partialPath} not found -->`
+    }
+  }
+
+  return loadedPartials
+}
+
+// Render with Mustache
+async function renderMustache(templateName, data, assetsBinding) {
+  const template = await loadTemplate(templateName, assetsBinding)
+  const partials = await loadPartials(template, assetsBinding)
+  return Mustache.render(template, data, partials)
+}
+
+// Fetch Are.na channel
+async function fetchArenaChannel(accessToken, channelSlug) {
+  const url = `https://api.are.na/v2/channels/${channelSlug}?page=1&per=64&direction=desc`
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Are.na API error: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+// Home route
+app.get('/', async (c) => {
+  const env = getEnv(c)
+
+  try {
+    // Fetch Are.na channel
+    const channel = await fetchArenaChannel(env.arenaPAT, env.arenaChannel)
+
+    // Parse config from channel description (YAML format)
+    let config
+    try {
+      config = yaml.load(channel.metadata.description)
+    } catch (yamlError) {
+      console.error('Error parsing YAML from channel description:', yamlError)
+      // Fallback to cache if YAML parsing fails
+      config = await loadConfig(c.env.ASSETS)
+    }
+
+    const contents = channel.contents
+
+    const html = await renderMustache(
+      'index',
+      {
+        static_url: env.cdn,
+        config,
+        arena: contents,
+      },
+      c.env.ASSETS
+    )
+
+    return c.html(html)
+  } catch (error) {
+    // Handle errors by loading cache
+    console.error('Error fetching Are.na channel:', error)
+
+    const cache = await loadConfig(c.env.ASSETS)
+
+    // Update title to reflect error
+    const errorConfig = {
+      ...cache,
+      details: {
+        ...cache.details,
+        title: 'Error 😭',
+      },
+    }
+
+    try {
+      const html = await renderMustache(
+        'index',
+        {
+          title: 'Error 😭',
+          static_url: env.cdn,
+          config: errorConfig,
+        },
+        c.env.ASSETS
+      )
+
+      return c.html(html)
+    } catch (renderError) {
+      console.error('Error rendering error page:', renderError)
+      return c.text('Error loading page', 500)
+    }
   }
 })
 
-if (environment !== 'now') {
-  const port = process.env.PORT || 3000
-  app.listen(port, function() {
-    console.log(`Up on port ${port} 🥚`)
-  })
-} else {
-  app.listen()
-}
-// what's happening here ?
-// `now` does not like it when ports are specified for it to use, or when options are set inside `app.listen(...)`. However, nodemon _does_ like having options set for ports, so this sets options based on what you are current running/building the server with
-// if you are running hot reloading w `$ nodemon`, `environment` will be "development", and the server will run w a specified PORT (in this case, 3000)
-// if you are compiling a `now` build w `$ now dev`, or `now`, `environment` will be "now", and now will listen with just `app.listen()`
-// you can configure the production environment in `.env` :)
+// Static file routes - serve from ASSETS binding (public directory)
+app.get('/js/*', async (c) => {
+  const path = c.req.path
+  return c.env.ASSETS.fetch(new Request(`http://localhost/public${path}`))
+})
+
+app.get('/stylesheets/*', async (c) => {
+  const path = c.req.path
+  return c.env.ASSETS.fetch(new Request(`http://localhost/public${path}`))
+})
+
+app.get('/fonts/*', async (c) => {
+  const path = c.req.path
+  return c.env.ASSETS.fetch(new Request(`http://localhost/public${path}`))
+})
+
+app.get('/assets/*', async (c) => {
+  const path = c.req.path
+  return c.env.ASSETS.fetch(new Request(`http://localhost/public${path}`))
+})
+
+app.get('/api/*', async (c) => {
+  const path = c.req.path
+  return c.env.ASSETS.fetch(new Request(`http://localhost${path}`))
+})
+
+// Favicon handler
+app.get('/favicon.ico', (c) => c.body(null, 204))
+
+// 404 handler
+app.notFound(async (c) => {
+  try {
+    const html = await renderMustache(
+      '404',
+      {
+        url: c.req.url,
+        static_url: '...',
+        title: 'Page not found',
+      },
+      c.env.ASSETS
+    )
+    return c.html(html, 404)
+  } catch (error) {
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page not found</title>
+</head>
+<body>
+  <h1>404 - Page not found</h1>
+  <p>The page ${c.req.url} could not be found.</p>
+</body>
+</html>
+    `
+    return c.html(html, 404)
+  }
+})
+
+export default app

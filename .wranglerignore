@@ -1,0 +1,10 @@
+node_modules
+.git
+.wrangler
+package-lock.json
+yarn.lock
+README.md
+.DS_Store
+.env
+.env.*
+*.log
