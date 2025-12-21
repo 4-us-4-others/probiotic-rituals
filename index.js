@@ -5,10 +5,8 @@ import yaml from 'js-yaml'
 
 const app = new Hono()
 
-// Middleware
 app.use('*', cors())
 
-// Get environment from context
 const getEnv = (c) => ({
   environment: c.env.environment || 'production',
   cdn: c.env.cdn,
@@ -17,13 +15,10 @@ const getEnv = (c) => ({
   arenaChannel: c.env.arenaChannel,
 })
 
-// Template cache
 const templates = {}
 
-// Config cache - will be loaded from ASSETS
 let configCache = null
 
-// Load config.yaml from ASSETS
 async function loadConfig(assetsBinding) {
   if (configCache) {
     return configCache
@@ -43,7 +38,6 @@ async function loadConfig(assetsBinding) {
     return configCache
   } catch (error) {
     console.error('Error loading config:', error)
-    // Return a basic fallback config
     return {
       details: {
         title: 'Error loading config',
@@ -52,7 +46,6 @@ async function loadConfig(assetsBinding) {
   }
 }
 
-// Load template from ASSETS
 async function loadTemplate(templateName, assetsBinding) {
   const cacheKey = templateName
   if (templates[cacheKey]) {
@@ -77,7 +70,6 @@ async function loadTemplate(templateName, assetsBinding) {
   }
 }
 
-// Load partials
 async function loadPartials(template, assetsBinding, loadedPartials = {}) {
   const partialRegex = /\{\{>\s*([^\}]+)\s*\}\}/g
   let match
@@ -102,14 +94,12 @@ async function loadPartials(template, assetsBinding, loadedPartials = {}) {
   return loadedPartials
 }
 
-// Render with Mustache
 async function renderMustache(templateName, data, assetsBinding) {
   const template = await loadTemplate(templateName, assetsBinding)
   const partials = await loadPartials(template, assetsBinding)
   return Mustache.render(template, data, partials)
 }
 
-// Fetch Are.na channel
 async function fetchArenaChannel(accessToken, channelSlug) {
   const url = `https://api.are.na/v2/channels/${channelSlug}?page=1&per=64&direction=desc`
 
@@ -126,21 +116,17 @@ async function fetchArenaChannel(accessToken, channelSlug) {
   return response.json()
 }
 
-// Home route
 app.get('/', async (c) => {
   const env = getEnv(c)
 
   try {
-    // Fetch Are.na channel
     const channel = await fetchArenaChannel(env.arenaPAT, env.arenaChannel)
 
-    // Parse config from channel description (YAML format)
     let config
     try {
       config = yaml.load(channel.metadata.description)
     } catch (yamlError) {
       console.error('Error parsing YAML from channel description:', yamlError)
-      // Fallback to cache if YAML parsing fails
       config = await loadConfig(c.env.ASSETS)
     }
 
@@ -158,12 +144,10 @@ app.get('/', async (c) => {
 
     return c.html(html)
   } catch (error) {
-    // Handle errors by loading cache
     console.error('Error fetching Are.na channel:', error)
 
     const cache = await loadConfig(c.env.ASSETS)
 
-    // Update title to reflect error
     const errorConfig = {
       ...cache,
       details: {
@@ -191,7 +175,6 @@ app.get('/', async (c) => {
   }
 })
 
-// Static file routes - serve from ASSETS binding (public directory)
 app.get('/js/*', async (c) => {
   const path = c.req.path
   return c.env.ASSETS.fetch(new Request(`http://localhost/public${path}`))
@@ -217,10 +200,8 @@ app.get('/api/*', async (c) => {
   return c.env.ASSETS.fetch(new Request(`http://localhost${path}`))
 })
 
-// Favicon handler
 app.get('/favicon.ico', (c) => c.body(null, 204))
 
-// 404 handler
 app.notFound(async (c) => {
   try {
     const html = await renderMustache(
